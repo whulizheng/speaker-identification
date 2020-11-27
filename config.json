@@ -1,0 +1,22 @@
+{
+    "data": {
+        "train_dataset_dir": "data\\train\\",
+        "test_dataset_dir": "data\\test\\"
+    },
+    "model": {
+        "version": "0.0.1.a100",
+        "input_shape": [1025,1,1],
+        "nb_classes": 88,
+        "model_name": "fcn",
+        "model_path": "model\\",
+        "batch_size": 8,
+        "epoch": 15
+    },
+    "advanced": {
+
+    },
+    "video":{
+        "cut_threshold":15
+    }
+
+}
