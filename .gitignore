@@ -128,3 +128,4 @@ model/*
 .vscode/
 
 results/
+tmp/

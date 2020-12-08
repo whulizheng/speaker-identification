@@ -17,16 +17,32 @@ class Classifier_FCN:
 
     def build_model(self, input_shape, nb_classes):
         model = Sequential()
-        model.add(Conv2D(128, kernel_size=3, strides=2,
+        model.add(Conv2D(256, kernel_size=3, strides=2,
                          input_shape=tuple(input_shape), padding="same"))
         model.add(LeakyReLU(alpha=0.2))
-        model.add(Dropout(0.25))
-        model.add(Conv2D(64, kernel_size=3, strides=2, padding="same"))
+        model.add(Conv2D(128, kernel_size=3, strides=2, padding="same"))
+        model.add(ZeroPadding2D(padding=((0, 1), (0, 1))))
+        model.add(BatchNormalization(momentum=0.8))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(Conv2D(128, kernel_size=3, strides=2, padding="same"))
         model.add(ZeroPadding2D(padding=((0, 1), (0, 1))))
         model.add(BatchNormalization(momentum=0.8))
         model.add(LeakyReLU(alpha=0.2))
         model.add(Dropout(0.25))
         model.add(Conv2D(64, kernel_size=3, strides=1, padding="same"))
+        model.add(ZeroPadding2D(padding=((0, 1), (0, 1))))
+        model.add(BatchNormalization(momentum=0.8))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(Dropout(0.25))
+        model.add(Conv2D(64, kernel_size=3, strides=1, padding="same"))
+        model.add(ZeroPadding2D(padding=((0, 1), (0, 1))))
+        model.add(BatchNormalization(momentum=0.8))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(Conv2D(16, kernel_size=3, strides=1, padding="same"))
+        model.add(BatchNormalization(momentum=0.8))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(Dropout(0.25))
+        model.add(Conv2D(8, kernel_size=3, strides=1, padding="same"))
         model.add(BatchNormalization(momentum=0.8))
         model.add(LeakyReLU(alpha=0.2))
         model.add(Dropout(0.25))
@@ -38,7 +54,8 @@ class Classifier_FCN:
         model_checkpoint = keras.callbacks.ModelCheckpoint(
             filepath=file_path, monitor='loss', save_best_only=True)
         self.callbacks = [reduce_lr, model_checkpoint]
-        model.compile(loss='categorical_crossentropy', optimizer=keras.optimizers.Adam(),
+        model.compile(loss='categorical_crossentropy',
+                      optimizer=keras.optimizers.Adam(),
                       metrics=['accuracy'])
         return model
 

@@ -9,21 +9,22 @@ class preprocessor():
         self.length = length
 
     def LoadFile(self, file_path):
-        y, _ = librosa.load(file_path)
-        return y
+        y, sr = librosa.load(file_path)
+        return y, sr
 
-    def ConvertOnsetCut(self, y):
-        onsets_frames = librosa.onset.onset_detect(y)
+    def ConvertOnsetCut(self, y, sr):
+        onsets_frames = librosa.onset.onset_detect(y, sr=sr, backtrack=True)
         results = []
         D = librosa.stft(y)
         # D = librosa.amplitude_to_db(np.abs(D))
         for i in onsets_frames:
-            results.append(np.array(D[:, i]).reshape((1025, 1, 1)))
+            results.append(
+                np.array([D[:, i], D[:, i+1], D[:, i+2]]).reshape((1025*3, 1, 1)))
         return results
 
 
 if __name__ == "__main__":
     preprocessor = preprocessor()
-    y = preprocessor.LoadFile(r'data/PIANO/p0.wav')
-    resutls = preprocessor.ConvertOnsetCut(y)
+    y, sr = preprocessor.LoadFile(r'data/PIANO/p0.wav')
+    resutls = preprocessor.ConvertOnsetCut(y, sr)
     print(resutls)

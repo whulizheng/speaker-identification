@@ -1,11 +1,12 @@
 import librosa
 import json
 import numpy as np
+import os
 
 
 def LoadFile(file_path):
-    y, _ = librosa.load(file_path)
-    return y
+    y, sr = librosa.load(file_path)
+    return y, sr
 
 
 def Readans(file_path):
@@ -25,3 +26,10 @@ def process_bar(percent, start_str='', end_str='', total_length=0):
     bar = '\r' + start_str + \
         bar.ljust(total_length) + ' {:0>4.1f}%|'.format(percent*100) + end_str
     print(bar, end='', flush=True)
+
+
+def scan_file(file_dir):
+    files = []
+    for roo, dirs, file in os.walk(file_dir):
+        files.append(file)
+    return files[0]

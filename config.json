@@ -1,22 +1,31 @@
 {
     "data": {
-        "train_dataset_dir": "data\\train\\",
-        "test_dataset_dir": "data\\test\\"
+        "train_dataset_dir": "C:\\Users\\WhuLi\\Documents\\final\\output\\train_augment\\fin\\",
+        "test_dataset_dir": "data\\test\\",
+        "names": [
+            "douwentao",
+            "liangwendao",
+            "majiahui",
+            "zhouyijun",
+            "bgm"
+        ],
+        "slice_lenth": 6
     },
     "model": {
         "version": "0.0.1.a100",
-        "input_shape": [1025,1,1],
-        "nb_classes": 88,
+        "input_shape": [
+            3075,
+            1,
+            1
+        ],
+        "nb_classes": 5,
         "model_name": "fcn",
         "model_path": "model\\",
-        "batch_size": 8,
-        "epoch": 15
+        "batch_size": 16,
+        "epoch": 30
     },
-    "advanced": {
-
-    },
-    "video":{
-        "cut_threshold":15
+    "advanced": {},
+    "video": {
+        "cut_threshold": 15
     }
-
 }
